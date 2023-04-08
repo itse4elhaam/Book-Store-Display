@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 const indexRouter = require("./routes/Index");
 const authors = require("./routes/authors");
+const bodyParser = require('body-parser');
 
 const app = express();
-
 
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true});
 mongoose.set('strictQuery', true);
@@ -18,6 +18,7 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false})); //this changes the file size of upload
 
 //! All of the routes here:
 app.use("/", indexRouter);
